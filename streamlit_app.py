@@ -3791,16 +3791,17 @@ with tabs[6]:
     col1, col2 = st.columns([3, 2])
     
     with col1:
+        # Model Performance Comparison
         st.subheader("Model Performance Comparison")
-        
+
         # Get data for model comparison (actual and forecasts)
         historical_end = pd.Timestamp('2024-10-01')  # Last historical data point
-        
+
         historical_data = time_series_data[time_series_data['Date'] <= historical_end].copy()
         future_data = time_series_data[time_series_data['Date'] > historical_end].copy()
 
-        # Create comparison dataframe
-        comparison_data = time_series_data[time_series_data['Date'] >= pd.Timestamp('2023-01-01')].copy()
+        # Create comparison dataframe - UPDATED TO START FROM 2024-Q1 instead of 2023-Q1
+        comparison_data = time_series_data[time_series_data['Date'] >= pd.Timestamp('2024-01-01')].copy()
         comparison_data = comparison_data.reset_index(drop=True)  # Reset index for safe indexing
 
         # Generate predictions for each model
@@ -3820,6 +3821,7 @@ with tabs[6]:
                 comparison_data.loc[i, 'Date']
             )
             
+            # The rest of the model predictions remain the same...
             # AR model prediction (if we have 2 lags of data)
             if i >= 2:  # Need at least 2 previous rows for AR(2) model
                 prev_value1 = comparison_data.loc[i-1, 'Personal_Savings_Rate']
